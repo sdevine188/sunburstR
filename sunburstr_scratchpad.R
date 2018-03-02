@@ -42,7 +42,7 @@ sequences
 # create sunburst
 sb <- sequences %>%
         arrange(desc(depth), event) %>%
-        sunburst()
+        sunburst(count = TRUE)
 sb
 
 # save plot - this doesn't work
@@ -51,4 +51,26 @@ sb
 dev.off()
 
 
+
+
+######################################
+
+df <- data.frame(event = c(rep("approved", 100), rep("denied", 50), rep("pending", 25),
+                           rep("approved-approved", 200), rep("approved-denied", 150), rep("approved-pending", 100),
+                           rep("approved-approved-approved", 300), rep("approved-approved-denied", 200),
+                           rep("approved-approved-pending", 150), rep("approved-approved-approved-approved", 400),
+                           rep("approved-approved-approved-denied", 300), rep("approved-approved-approved-pending", 200),
+                           rep("approved-denied-approved-pening", 500), rep("denied-approved-approved-pending-denied", 600),
+                           rep("pending-denied-approved-approved-denied-approved-denied", 800)))
+df
+glimpse(df)
+
+
+colors <- viridis(4)
+colors <- colors %>% map(.x, .f = ~ str_sub(.x, start = 1, end = 7)) %>% unlist()
+str(colors)
+sund2b(
+        df,
+        colors = list(range = colors)
+)
 

@@ -8,6 +8,7 @@ library(tidyr)
 setwd("C:/Users/Stephen/Desktop/R/sunburstR")
 
 # http://timelyportfolio.github.io/sunburstR/example_baseball.html
+# http://www.buildingwidgets.com/blog/2015/7/2/week-26-sunburstr
 
 # get all data from 2016-08-25
 dat <- scrape(start = "2016-08-25", end = "2016-08-25")
@@ -22,7 +23,7 @@ action <- dat$runner %>%
         filter(row_number() == 1) %>%
         ungroup() %>%
         group_by(gameday_link, inning, inning_side) %>%
-        summarize(event = paste(c(event),collapse="-"))
+        summarize(event = paste(c(event), collapse="-")) %>% mutate(event = str_c(event, "-end"))
 action
 
 sequences <- action %>%
